@@ -25,9 +25,11 @@ class OrderForm extends Component {
   handleSubmit = e => {
     e.preventDefault();
     this.clearInputs();
+    let currentOrdersLength = this.props.orders.length
+    console.log(currentOrdersLength)
     postOrder({name: this.state.name, ingredients: this.state.ingredients})
       .catch(err => console.error(err.message))
-    let order = [{id: Date.now(), name: this.state.name, ingredients: this.state.ingredients}]
+    let order = [{id: currentOrdersLength + 1, name: this.state.name, ingredients: this.state.ingredients}]
     this.props.addOrder(order)
   }
 
@@ -73,4 +75,8 @@ const mapDispatchToProps = dispatch => ({
   addOrder: order => dispatch(addOrder(order))
 })
 
-export default connect(null, mapDispatchToProps)(OrderForm);
+const mapStateToProps = ({ orders }) => ({
+  orders
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(OrderForm);

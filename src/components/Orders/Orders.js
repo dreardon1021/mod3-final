@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import './Orders.css';
 import { connect } from 'react-redux';
-import { setOrders } from '../../actions';
-import { getOrders } from '../../apiCalls';
+import { setOrders, deleteRedux } from '../../actions';
+import { getOrders, deleteOrder } from '../../apiCalls';
 
 class Orders extends Component {
   constructor(props) {
@@ -18,6 +18,11 @@ class Orders extends Component {
       .catch(err => console.error('Error fetching:', err));
   }
 
+  deleteThisOrder = burritoId => {
+    this.props.deleteRedux(burritoId)
+    deleteOrder(burritoId)
+  }
+
   render() {
     const orderEls = this.props.orders.map(order => {
       return (
@@ -28,6 +33,7 @@ class Orders extends Component {
               return <li data-testid ={`${order.name} ${ingredient}`} key={`${ingredient} + ${order.id}`}>{ingredient}</li>
             })}
           </ul>
+          <button onClick={() => this.deleteThisOrder(order.id)} className="Delete">DELETE</button>
         </div>
       )
     });
@@ -45,7 +51,8 @@ const mapStateToProps = ({ orders }) => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-    setOrders: (orders) => dispatch(setOrders(orders))
+    setOrders: (orders) => dispatch(setOrders(orders)),
+    deleteRedux: (orderId) => dispatch(deleteRedux(orderId))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Orders);

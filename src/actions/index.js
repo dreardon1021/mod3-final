@@ -7,3 +7,9 @@ export const addOrder = order => ({
   type: 'ADD_ORDER',
   order
 })
+
+export const deleteRedux = orderId => ({
+  type: 'DELETE_ORDER',
+  orderId
+})
+
