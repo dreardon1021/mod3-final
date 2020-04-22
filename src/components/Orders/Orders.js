@@ -7,9 +7,7 @@ import { getOrders, deleteOrder } from '../../apiCalls';
 class Orders extends Component {
   constructor(props) {
     super(props);
-    this.state ={
-
-    }
+    this.state ={}
   }
 
   componentDidMount() {
@@ -39,7 +37,7 @@ class Orders extends Component {
     });
 
     return (
-      <section>
+      <section className="orders-container">
         { orderEls.length ? orderEls : <p>No orders yet!</p> }
       </section>
     )
