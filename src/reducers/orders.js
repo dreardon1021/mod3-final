@@ -8,7 +8,7 @@ export const orders = (state = [], action) => {
     case 'DELETE_ORDER':
       let orderToDelete = state.find(order => order.id === action.orderId)
       console.log(orderToDelete)
-      state.splice(state.indexOf(orderToDelete))
+      state.splice(state.indexOf(orderToDelete, 1))
       return [...state];
     default:
       return state;
