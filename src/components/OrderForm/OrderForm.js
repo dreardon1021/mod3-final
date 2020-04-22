@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { addOrder } from '../../actions';
+import { postOrder } from '../../apiCalls'
 
 class OrderForm extends Component {
   constructor(props) {
@@ -24,7 +25,8 @@ class OrderForm extends Component {
   handleSubmit = e => {
     e.preventDefault();
     this.clearInputs();
-    console.log(this.state.ingredients)
+    postOrder({name: this.state.name, ingredients: this.state.ingredients})
+      .catch(err => console.error(err.message))
     let order = [{id: Date.now(), name: this.state.name, ingredients: this.state.ingredients}]
     this.props.addOrder(order)
   }
