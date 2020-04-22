@@ -25,7 +25,7 @@ class Orders extends Component {
           <h3>{order.name}</h3>
           <ul  className="ingredient-list">
             {order.ingredients.map(ingredient => {
-              return <li key={`${ingredient} + ${order.id}`}>{ingredient}</li>
+              return <li data-testid ={`${order.name} ${ingredient}`} key={`${ingredient} + ${order.id}`}>{ingredient}</li>
             })}
           </ul>
         </div>
