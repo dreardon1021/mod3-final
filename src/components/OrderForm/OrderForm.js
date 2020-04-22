@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { addOrder } from '../../actions';
 
 class OrderForm extends Component {
   constructor(props) {
-    super();
+    super(props);
     this.props = props;
     this.state = {
       name: '',
@@ -22,6 +24,9 @@ class OrderForm extends Component {
   handleSubmit = e => {
     e.preventDefault();
     this.clearInputs();
+    console.log(this.state.ingredients)
+    let order = [{id: Date.now(), name: this.state.name, ingredients: this.state.ingredients}]
+    this.props.addOrder(order)
   }
 
   clearInputs = () => {
@@ -38,6 +43,8 @@ class OrderForm extends Component {
       )
     });
 
+    const arrayValue = this.state.ingredients.length > 0 ? false : true
+
     return (
       <form>
         <input
@@ -52,7 +59,7 @@ class OrderForm extends Component {
 
         <p>Order: { this.state.ingredients.join(', ') || 'Nothing selected' }</p>
 
-        <button onClick={e => this.handleSubmit(e)}>
+        <button disabled={arrayValue} onClick={e => this.handleSubmit(e)}>
           Submit Order
         </button>
       </form>
@@ -60,4 +67,8 @@ class OrderForm extends Component {
   }
 }
 
-export default OrderForm;
+const mapDispatchToProps = dispatch => ({
+  addOrder: order => dispatch(addOrder(order))
+})
+
+export default connect(null, mapDispatchToProps)(OrderForm);
